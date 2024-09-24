@@ -2,11 +2,20 @@ spring:
   cloud:
     gateway:
       routes:
+        # Route pour le backend-service
         - id: backend
           uri: http://localhost:8081
           predicates:
             - Path=/api/patients/**
+
+        # Route pour le frontend-service (patients page)
         - id: frontend
           uri: http://localhost:8082
           predicates:
             - Path=/patients/**
+
+        # Redirection de la racine ("/") vers la page de login du frontend
+        - id: login_redirect
+          uri: http://localhost:8082/login
+          predicates:
+            - Path=/

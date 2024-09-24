@@ -9,10 +9,20 @@ import org.springframework.context.annotation.Configuration;
 
 public class GatewayConfig {
 
+
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
+                // Route vers le backend
                 .route("backend_route", r -> r.path("/api/patients/**")
-                        .uri("http://localhost:8081")) // Assure-toi que ce port et ce chemin sont corrects
+                        .uri("http://localhost:8081")) // Redirige vers le backend
+                // Route vers le frontend
+                .route("frontend_route", r -> r.path("/**")
+                        .uri("http://localhost:8082"))
+                .route("frontend_route", r -> r.path("/patients")
+                        .uri("http://localhost:8082")) // Redirige vers le frontend
                 .build();
-    } }
+    }
+
+
+    }

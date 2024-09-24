@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientService {
@@ -22,4 +23,9 @@ public class PatientService {
 
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
-    }       }
+    }
+
+    public Optional<Patient> getPatientById(Long id) {
+        return patientRepository.findById(id); }
+
+}

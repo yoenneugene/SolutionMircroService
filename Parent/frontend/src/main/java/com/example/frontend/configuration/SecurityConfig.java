@@ -18,12 +18,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/login", "/register").permitAll() // Permet l'accès sans authentification
+                                .requestMatchers("/login", "/css/**", "/js/**").permitAll() // Permet l'accès sans authentification
                                 .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .defaultSuccessUrl("/home", true) // Redirige vers /home après une connexion réussie
+                                .defaultSuccessUrl("/patients", true) // Redirige vers /home après une connexion réussie
                                 .permitAll() // Permet l'accès à la page de connexion à tout le monde
                 )
                 .logout(logout ->
