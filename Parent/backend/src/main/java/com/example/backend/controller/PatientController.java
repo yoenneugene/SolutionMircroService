@@ -26,11 +26,11 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePatient(@PathVariable Long id) {
+    public void deletePatient(@PathVariable String id) {
         patientService.deletePatient(id);
     }
     @GetMapping("/{id}")
-    public Optional<Patient> getPatientById(@PathVariable Long id) {
+    public Optional<Patient> getPatientById(@PathVariable String id) {
         return patientService.getPatientById(id);
     }
 }

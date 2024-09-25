@@ -21,11 +21,12 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public void deletePatient(Long id) {
+    public void deletePatient(String id) {
         patientRepository.deleteById(id);
     }
 
-    public Optional<Patient> getPatientById(Long id) {
+    public Optional<Patient> getPatientById(String id) {
         return patientRepository.findById(id); }
+
 
 }

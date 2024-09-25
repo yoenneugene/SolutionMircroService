@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 public class Patient {
 
-    private Long id;
+    private String id;
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
     private String adresse;
     private String telephone;
 
-    public Patient(String prenom, Long id, String nom, LocalDate dateNaissance, String adresse, String telephone) {
+    public Patient(String prenom, String id, String nom, LocalDate dateNaissance, String adresse, String telephone) {
         this.prenom = prenom;
         this.id = id;
         this.nom = nom;
@@ -20,11 +20,11 @@ public class Patient {
         this.telephone = telephone;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

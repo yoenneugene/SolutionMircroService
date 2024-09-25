@@ -1,27 +1,27 @@
 package com.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-@Entity
+@Document(collection = "patients") // Indique que cette classe sera stockée dans la collection "patients"
 public class Patient {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
     private String adresse;
     private String telephone;
 
-
-
-
+    // Constructeurs
+    public Patient() {
+    }
 
     public Patient(String prenom, String nom, LocalDate dateNaissance, String adresse, String telephone) {
         this.prenom = prenom;
@@ -31,14 +31,12 @@ public class Patient {
         this.telephone = telephone;
     }
 
-    public Patient() {
-    }
-
-    public Long getId() {
+    // Getters et Setters
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -81,4 +79,15 @@ public class Patient {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
-}
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id='" + id + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", adresse='" + adresse + '\'' +
+                ", telephone='" + telephone + '\'' +
+                '}';
+    }   }

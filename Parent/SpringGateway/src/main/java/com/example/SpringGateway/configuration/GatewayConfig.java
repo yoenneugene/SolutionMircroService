@@ -15,8 +15,9 @@ public class GatewayConfig {
         return builder.routes()
                 // Route vers le backend
                 .route("backend_route", r -> r.path("/api/patients/**")
-                        .uri("http://localhost:8081")) // Redirige vers le backend
-                // Route vers le frontend
+                        .uri("http://localhost:8081")) // Service backend pour les patients
+                .route("notes_route", r -> r.path("/api/notes/**") // Ajout de la route pour les notes
+                        .uri("http://localhost:8081"))
                 .route("frontend_route", r -> r.path("/**")
                         .uri("http://localhost:8082"))
                 .route("frontend_route", r -> r.path("/patients")

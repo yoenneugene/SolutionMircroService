@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Détail du Patient</title>
+    <title>Détails du Patient</title>
 </head>
 <body>
 <h1>Détails du Patient</h1>
@@ -10,6 +10,18 @@
 <p><strong>Date de Naissance :</strong> <span th:text="${patient.dateNaissance}">15/05/1980</span></p>
 <p><strong>Adresse :</strong> <span th:text="${patient.adresse}">10 Rue des Fleurs, Paris</span></p>
 <p><strong>Téléphone :</strong> <span th:text="${patient.telephone}">0102030405</span></p>
+
+<h2>Notes</h2>
+<ul>
+    <li th:each="note : ${notes}">
+        <strong th:text="${note.patient}">Patient Name</strong>: <span th:text="${note.note}">Note content</span>
+    </li>
+</ul>
+
+<!-- Bouton pour ajouter une nouvelle note -->
+<a th:href="@{/patients/{id}/add-note(id=${patient.id})}">
+    <button>Ajouter une note</button>
+</a>
 
 <a href="/patients">Retour à la liste</a>
 </body>
