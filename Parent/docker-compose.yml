@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"  # Mapper le port 27018 sur l'hôte au port 27017 dans le conteneur
+    networks:
+      - app-network
+
+  backend:
+    image: backend # Remplacez par le nom de votre image backend
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/patients_db  # Remplacez par votre URI
+    networks:
+      - app-network
+
+  frontend:
+    image: frontend # Remplacez par le nom de votre image frontend
+    ports:
+      - "8082:8082"
+    networks:
+      - app-network
+
+  SpringGateway:
+    image: springgateway  # Remplacez par le nom de votre image gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

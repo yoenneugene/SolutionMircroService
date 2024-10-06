@@ -18,6 +18,16 @@ public class Patient {
     private LocalDate dateNaissance;
     private String adresse;
     private String telephone;
+    private  String genre ;
+
+    public Patient(String prenom, String nom, LocalDate dateNaissance, String adresse, String genre, String telephone) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.dateNaissance = dateNaissance;
+        this.adresse = adresse;
+        this.genre = genre;
+        this.telephone = telephone;
+    }
 
     // Constructeurs
     public Patient() {
@@ -30,6 +40,7 @@ public class Patient {
         this.adresse = adresse;
         this.telephone = telephone;
     }
+
 
     // Getters et Setters
     public String getId() {
@@ -90,4 +101,13 @@ public class Patient {
                 ", adresse='" + adresse + '\'' +
                 ", telephone='" + telephone + '\'' +
                 '}';
-    }   }
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+}

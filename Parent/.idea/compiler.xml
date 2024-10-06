@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SpringGateway" />
         <module name="backend" />
+        <module name="Parent" />
         <module name="frontend" />
       </profile>
     </annotationProcessing>

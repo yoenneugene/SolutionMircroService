@@ -2,20 +2,19 @@ spring:
   cloud:
     gateway:
       routes:
-        # Route pour le backend-service
-        - id: backend
-          uri: http://localhost:8081
+        - id: backend_route
+          uri: http://backend:8081  # Remplacez localhost par backend
           predicates:
-            - Path=/api/patients/**
-
-        # Route pour le frontend-service (patients page)
-        - id: frontend
-          uri: http://localhost:8082
+            - Path=/api/patients/**  # Redirige vers le backend pour les patients
+        - id: notes_route
+          uri: http://backend:8081  # Remplacez localhost par backend
           predicates:
-            - Path=/patients/**
-
-        # Redirection de la racine ("/") vers la page de login du frontend
-        - id: login_redirect
-          uri: http://localhost:8082/login
+            - Path=/api/notes/**  # Redirige vers le backend pour les notes
+        - id: frontend_route
+          uri: http://frontend:8082  # Remplacez localhost par frontend
           predicates:
-            - Path=/
+            - Path=/login  # Redirige vers la page de connexion
+        - id: frontend_patients_route
+          uri: http://frontend:8082  # Remplacez localhost par frontend
+          predicates:
+            - Path=/patients
