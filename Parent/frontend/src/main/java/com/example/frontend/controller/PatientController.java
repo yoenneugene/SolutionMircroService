@@ -3,6 +3,7 @@ package com.example.frontend.controller;
 import com.example.frontend.model.Note;
 import com.example.frontend.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,5 +68,13 @@ public class PatientController {
 
         restTemplate.postForObject(NOTES_API_URL, newNote, Note.class);
         return "redirect:/patients/" + id;
+    }
+    @PostMapping("/notes/{id}/delete")
+    public String deleteNote(@PathVariable String id, @RequestParam String patientId) {
+        // Envoie d'une requête DELETE via le Gateway pour supprimer la note
+        restTemplate.exchange(NOTES_API_URL + "/" + id, HttpMethod.DELETE, null, Void.class);
+
+        // Redirige vers la page des détails du patient après suppression de la note
+        return "redirect:/patients/" + patientId;
     }
 }

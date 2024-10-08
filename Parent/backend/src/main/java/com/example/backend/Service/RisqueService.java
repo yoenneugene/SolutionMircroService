@@ -46,10 +46,12 @@ public class RisqueService {
             return "None";  // Aucun risque
         } else if (triggerCount >= 2 && triggerCount <= 5 && patient.getDateNaissance().isBefore(LocalDate.now().minusYears(30))) {
             return "Borderline";  // Risque limité
-        } else if (patient.getGenre().equals("Homme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30)) && triggerCount >= 3) {
+        } else if (patient.getGenre().equals("Homme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30)) && triggerCount >= 3 && triggerCount <=5) {
             return "In Danger";  // Danger pour les hommes de moins de 30 ans
-        } else if (patient.getGenre().equals("Femme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30)) && triggerCount >= 4) {
-            return "In Danger";  // Danger pour les femmes de moins de 30 ans
+        } else if (patient.getGenre().equals("Femme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30)) && triggerCount >= 4 && triggerCount <=7) {
+            return "In Danger";
+        } else if (triggerCount >= 6 && triggerCount <= 7 && patient.getDateNaissance().isBefore(LocalDate.now().minusYears(30))) {
+            return "In danger"; // 
         } else if (triggerCount >= 5 && patient.getGenre().equals("Homme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30))) {
             return "Early Onset";  // Apparition précoce pour les hommes
         } else if (triggerCount >= 7 && patient.getGenre().equals("Femme") && patient.getDateNaissance().isAfter(LocalDate.now().minusYears(30))) {
