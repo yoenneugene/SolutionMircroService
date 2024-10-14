@@ -1,15 +1,22 @@
 package com.example.frontend.controller;
 
+import com.example.frontend.configuration.LocalDateAdapter;
 import com.example.frontend.model.Note;
 import com.example.frontend.model.Patient;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +27,10 @@ public class PatientController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private final String GATEWAY_URL = "http://SpringGateway:8080/api/patients"; // Updated to frontend
     private final String NOTES_API_URL = "http://SpringGateway:8080/api/notes"; // Updated to frontend
 
@@ -77,4 +88,56 @@ public class PatientController {
         // Redirige vers la page des détails du patient après suppression de la note
         return "redirect:/patients/" + patientId;
     }
+    @PostMapping("/patients/add")
+    public String addPatient(
+            @RequestParam String prenom,
+            @RequestParam String nom,
+            @RequestParam String dateNaissance,
+            @RequestParam String genre,
+            @RequestParam String adresse,
+            @RequestParam String telephone
+    ) {
+        System.out.println("opennnnnnnnnnnnnnnnnnnnnnnn");
+
+        // Créer un nouvel objet Patient
+        Patient newPatient = new Patient();
+        newPatient.setPrenom(prenom);
+        newPatient.setNom(nom);
+        newPatient.setDateNaissance(LocalDate.parse(dateNaissance));
+        newPatient.setGenre(genre);
+        newPatient.setAdresse(adresse);
+        newPatient.setTelephone(telephone);
+        System.out.println("Données du patient à ajouter : " + newPatient);
+
+        // Sérialisation de l'objet Patient en JSON
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateAdapter());
+        Gson gson = gsonBuilder.create();
+
+        // Sérialiser l'objet Patient en JSON
+        String jsonString = gson.toJson(newPatient);
+        System.out.println("Serialized JSON: " + jsonString);
+
+        // Envoyer une requête POST pour ajouter le nouveau patient
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON); // Assurez-vous que c'est application/json
+        HttpEntity<String> request = new HttpEntity<>(jsonString, headers);
+
+        // Envoyer la requête
+        ResponseEntity<Patient> response = restTemplate.postForEntity(GATEWAY_URL, request, Patient.class);
+
+        // Vérifiez la réponse si besoin
+        if (response.getStatusCode() == HttpStatus.OK) {
+            // Rediriger vers la liste des patients après l'ajout
+            return "redirect:/patients";
+        } else {
+            // Gérer les erreurs si nécessaire
+            return "redirect:/error"; // Par exemple
+        }}
+    @GetMapping("/patients/add")
+    public String showAddPatientPage(Model model) {
+        // Ajoutez ici tout modèle nécessaire pour la vue, si besoin
+        return "add-patient";  // Assurez-vous que le nom de la vue correspond au nom du fichier HTML
+    }
+
 }

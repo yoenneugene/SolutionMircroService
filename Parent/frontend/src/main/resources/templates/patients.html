@@ -5,6 +5,14 @@
 </head>
 <body>
 <h1>Liste des Patients</h1>
+
+<!-- Lien vers la page d'ajout de patient -->
+<a th:href="@{/patients/add}">
+    <button type="button">Ajouter un Patient</button>
+</a>
+
+<!-- Liste des patients -->
+<h2>Liste des Patients</h2>
 <table>
     <thead>
     <tr>
@@ -19,9 +27,10 @@
         <td th:text="${patient.id}"></td>
         <td th:text="${patient.prenom}"></td>
         <td th:text="${patient.nom}"></td>
-        <td><a th:href="'/patients/' + ${patient.id}">Voir details</a></td>
+        <td><a th:href="'/patients/' + ${patient.id}">Voir détails</a></td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

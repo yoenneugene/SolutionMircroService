@@ -22,11 +22,11 @@ public class PatientService {
     }
 
     public void deletePatient(String id) {
-        patientRepository.deleteById(id);
+        patientRepository.deleteById(Long.valueOf(id));
     }
 
     public Optional<Patient> getPatientById(String id) {
-        return patientRepository.findById(id); }
+        return patientRepository.findById(Long.valueOf(id)); }
 
 
 }

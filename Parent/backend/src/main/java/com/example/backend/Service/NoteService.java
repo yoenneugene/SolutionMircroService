@@ -71,7 +71,7 @@ public class NoteService {
         List<Note> patientNotes = noteRepository.findByPatid(patientId);
 
         // Récupérer les informations du patient (si besoin pour le genre et l'âge)
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+        Optional<Patient> patientOptional = patientRepository.findById(Long.valueOf(patientId));
         if (patientOptional.isPresent()) {
             Patient patient = patientOptional.get();
 

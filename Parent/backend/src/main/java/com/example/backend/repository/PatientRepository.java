@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface PatientRepository extends MongoRepository<Patient, String> {
-    // Tu peux ajouter des méthodes de requête personnalisées ici si nécessaire
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+    // Vous pouvez ajouter des méthodes de requête personnalisées ici si nécessaire
 }

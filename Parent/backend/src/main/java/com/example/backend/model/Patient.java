@@ -2,23 +2,29 @@ package com.example.backend.model;
 
 
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-@Document(collection = "patients") // Indique que cette classe sera stockée dans la collection "patients"
+// Indique que cette classe sera stockée dans la collection "patients"
+@Entity
 public class Patient {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Génère automatiquement un ID unique
+    private Long id;
 
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
     private String adresse;
     private String telephone;
-    private  String genre ;
+    private String genre;
+
 
     public Patient(String prenom, String nom, LocalDate dateNaissance, String adresse, String genre, String telephone) {
         this.prenom = prenom;
@@ -43,12 +49,12 @@ public class Patient {
 
 
     // Getters et Setters
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = Long.valueOf(id);
     }
 
     public String getPrenom() {

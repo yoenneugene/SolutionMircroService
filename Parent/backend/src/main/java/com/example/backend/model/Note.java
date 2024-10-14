@@ -9,7 +9,7 @@ public class Note {
     @Id
     private String id; // ID auto-généré par MongoDB
     private String patid; // L'ID du patient auquel la note est associée
-    private String patient; // Le nom du patient
+    private String patient; // Le type du patient
     private String note; // Le contenu de la note
 
     // Constructeurs

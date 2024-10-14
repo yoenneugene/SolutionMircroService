@@ -43,11 +43,11 @@ public class NoteServiceTest {
     public void setUp() {
         // Setup d'exemples de données
         patient = new Patient("John", "Doe", LocalDate.of(1985, 5, 15), "123 Main St", "M", "555-1234");
-        note1 = new Note( "None", "John Doe", "Note sur la santé");
-        note2 = new Note( "None", "John Doe", "Cholestérol élevé");
+        note1 = new Note( "1", "John Doe", "Note sur la santé");
+        note2 = new Note( "1", "John Doe", "Cholestérol élevé");
 
         // Mock des retours de noteRepository et patientRepository
-        when(patientRepository.findById("p1")).thenReturn(Optional.of(patient));
+        when(patientRepository.findById(Long.valueOf("1"))).thenReturn(Optional.of(patient));
         when(noteRepository.findByPatid("p1")).thenReturn(Arrays.asList(note1, note2));
     }
 

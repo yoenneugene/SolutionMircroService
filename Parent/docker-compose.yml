@@ -4,28 +4,48 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"  # Mapper le port 27018 sur l'hôte au port 27017 dans le conteneur
+      - "27017:27017"
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0   # Utilisation de MySQL 8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin   # Définir le mot de passe root pour MySQL
+      MYSQL_DATABASE: patient  # Créer une base de données appelée patients_db
+      MYSQL_USER: test1  # Utilisateur de la base de données
+      MYSQL_PASSWORD: pass  # Mot de passe de l'utilisateur de la base de données
+    ports:
+      - "3306:3306"  # Mapper le port MySQL
     networks:
       - app-network
 
   backend:
-    image: backend # Remplacez par le nom de votre image backend
+    image: backend
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/patients_db  # Remplacez par votre URI
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/patients_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/patient?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC # URL JDBC pour MySQL
+      - SPRING_DATASOURCE_USERNAME=test1  # Utilisateur MySQL défini dans le service mysql
+      - SPRING_DATASOURCE_PASSWORD=pass  # Mot de passe MySQL défini dans le service mysql
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update  # Hibernate pour créer/mettre à jour les tables
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect  # Dialecte pour MySQL 8
+    depends_on:
+      - mongo
+      - mysql  # Le backend dépend de MongoDB et MySQL
     networks:
       - app-network
 
   frontend:
-    image: frontend # Remplacez par le nom de votre image frontend
+    image: frontend
     ports:
       - "8082:8082"
     networks:
       - app-network
 
   SpringGateway:
-    image: springgateway  # Remplacez par le nom de votre image gateway
+    image: springgateway
     ports:
       - "8080:8080"
     networks:

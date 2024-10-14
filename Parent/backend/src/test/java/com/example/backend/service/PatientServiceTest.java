@@ -81,7 +81,7 @@ public class PatientServiceTest {
         Patient patient = new Patient("John", "Doe", LocalDate.of(1980, 5, 15), "10 Rue des Fleurs", "M", "0102030405");
 
         // Simuler le comportement de la méthode findById() du PatientRepository
-        when(patientRepository.findById("1")).thenReturn(Optional.of(patient));
+        when(patientRepository.findById(Long.valueOf("1"))).thenReturn(Optional.of(patient));
 
         // Appeler la méthode à tester
         Optional<Patient> result = patientService.getPatientById("1");

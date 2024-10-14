@@ -1,15 +1,24 @@
 package com.example.frontend.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Patient {
 
     private String id;
     private String prenom;
+
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
     private String nom;
     private LocalDate dateNaissance;
+    private  String genre ;
     private String adresse;
     private String telephone;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 
     public Patient(String prenom, String id, String nom, LocalDate dateNaissance, String adresse, String telephone) {
         this.prenom = prenom;
@@ -18,6 +27,10 @@ public class Patient {
         this.dateNaissance = dateNaissance;
         this.adresse = adresse;
         this.telephone = telephone;
+    }
+
+    public Patient() {
+
     }
 
     public String getId() {
@@ -48,8 +61,8 @@ public class Patient {
         return dateNaissance;
     }
 
-    public void setDateNaissance(LocalDate dateNaissance) {
-        this.dateNaissance = dateNaissance;
+    public void setDateNaissanceFromString(String dateNaissance) {
+        this.dateNaissance = dateNaissance != null ? LocalDate.parse(dateNaissance, formatter) : null;
     }
 
     public String getAdresse() {
@@ -66,5 +79,13 @@ public class Patient {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
